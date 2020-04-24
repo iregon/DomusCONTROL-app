@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Starting...</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3" [ngSwitch]="networkConnectionState">
+        <img src="assets/images/stepper/1_grey.png" *ngSwitchCase="0" class="stepper-icon">
+        <img src="assets/images/stepper/1_blue.png" *ngSwitchCase="1" class="stepper-icon">
+        <img src="assets/images/stepper/1_red.png" *ngSwitchCase="2" class="stepper-icon">
+      </ion-col>
+      <ion-col [ngSwitch]="networkConnectionState">
+        <p *ngSwitchCase="0">Checking connection to the internet</p>
+        <p *ngSwitchCase="1">Connected to the internet</p>
+        <p *ngSwitchCase="2">Impossible to connect to internet</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3" [ngSwitch]="mqttBrokerConnectionState">
+        <img src="assets/images/stepper/2_grey.png" *ngSwitchCase="0" class="stepper-icon">
+        <img src="assets/images/stepper/2_blue.png" *ngSwitchCase="1" class="stepper-icon">
+        <img src="assets/images/stepper/2_red.png" *ngSwitchCase="2" class="stepper-icon">
+      </ion-col>
+      <ion-col [ngSwitch]="mqttBrokerConnectionState">
+        <p *ngSwitchCase="0">Checking connection to the MQTT Broker</p>
+        <p *ngSwitchCase="1">Connected to the MQTT Broker</p>
+        <p *ngSwitchCase="2">Impossible to connect to MQTT Broker</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+
+  
+</ion-content>
