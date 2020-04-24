@@ -1,0 +1,32 @@
+h3.list-header {
+    margin: 0;
+    padding: 10px;
+}
+
+div.grid-tile {
+    text-align: center;
+    position: relative;
+    //box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.65);
+}
+  
+div.grid-tile > img {
+    object-position: center;
+}
+  
+div.grid-tile > p {
+    margin: 0 0 4px 0;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px 0;
+    width: 100%;
+    color: #000000;
+    font-weight: bold;
+}
+  
+p.project_name {
+    margin: 0;
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+    font-size: 13px;
+}

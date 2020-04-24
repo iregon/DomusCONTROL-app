@@ -7,10 +7,10 @@ const routes: Routes = [
     redirectTo: 'boot',
     pathMatch: 'full'
   },
-  // {
-  //   path: 'dashboard',
-  //   loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
-  // },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
   // {
   //   path: 'room',
   //   loadChildren: () => import('./pages/room/room.module').then( m => m.RoomPageModule)
