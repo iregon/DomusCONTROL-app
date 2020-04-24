@@ -11,10 +11,10 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   },
-  // {
-  //   path: 'room',
-  //   loadChildren: () => import('./pages/room/room.module').then( m => m.RoomPageModule)
-  // },
+  {
+    path: 'room',
+    loadChildren: () => import('./pages/room/room.module').then( m => m.RoomPageModule)
+  },
   {
     path: 'boot',
     loadChildren: () => import('./pages/boot/boot.module').then( m => m.BootPageModule)

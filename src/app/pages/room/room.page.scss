@@ -1,0 +1,19 @@
+.item-native {
+    background: transparent !important;
+}
+  
+ion-list {
+    background: transparent;
+}
+  
+:host{
+    background: transparent !important;
+}
+  
+p.room_name {
+    margin: 0;
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+    font-size: 13px;
+}
+  

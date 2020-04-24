@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{getRoomConfig().label}}</ion-title>
+    <p class="room_name">{{getFloorConfig().label}}</p>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let device of getRoomConfig().devices" [ngSwitch]="device.groupAddresses[0].dpt">
+      <ion-label>{{device.label}}</ion-label>
+      <mqtt-toggle *ngSwitchCase="1.001"></mqtt-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>
