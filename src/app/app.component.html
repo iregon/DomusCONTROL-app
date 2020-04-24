@@ -2,25 +2,20 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
+        <ion-avatar style="margin-left: 10px;">
+              <img src="https://i2.wp.com/ui-avatars.com/api//{{getInstallationConfig().name}}/64/0D8ABC/fff/2//true">
+            </ion-avatar>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
-
+          <ion-list-header [hidden]="!getInstallationConfig().showName">{{ getInstallationConfig().name }}</ion-list-header>
+          <ion-note [hidden]="!getInstallationConfig().showAddress">{{ getInstallationConfig().address }}</ion-note>
+          <ion-note [hidden]="getInstallationConfig().showAddress"></ion-note> <!-- Used only for spacing-->
+          
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
-
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
-          </ion-item>
         </ion-list>
       </ion-content>
     </ion-menu>
