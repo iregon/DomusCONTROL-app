@@ -1,0 +1,42 @@
+{
+  "project": {
+    "name": "Progetto Esame IoT",
+    "showName": true,
+    "address": "Via Lecce-Monteroni, 73047 Monteroni di Lecce LE",
+    "showAddress": true,
+    "mqttConnectionOptions": {
+      "mqttBrokerAddress": "farmer.cloudmqtt.com",
+      "mqttUsername": "msglojds",
+      "mqttPassword": "-J7KZzEMIGO6",
+      "mqttBrokerPort": "13855",
+      "mqttBrokerWebsocketPort": "33855"
+    },
+    "knxServerAddress": "10.0.13.200",
+    "knxServerPort": "3671",
+    "localPort": "5100",
+    "floors": [
+      {
+        "label": "Piano terra",
+        "rooms": [
+          {
+            "label": "Cucina",
+            "type": "kitchen",
+            "devices": [
+              {
+                "label": "Luce",
+                "groupAddresses": [
+                  {
+                    "label": "Luce",
+                    "address": "0/0/1",
+                    "addressStatus": "0/0/3",
+                    "dpt": "1.001"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
