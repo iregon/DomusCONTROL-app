@@ -1,8 +1,8 @@
 {
-  "name": "DomusCONTROL",
+  "name": "it.iregon.domuscontrol",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Alessadnro Tornesello",
+  "homepage": "https://iregon.github.io/DomusCONTROL-app2/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
