@@ -1,5 +1,7 @@
 {
   "name": "DomusCONTROL",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
