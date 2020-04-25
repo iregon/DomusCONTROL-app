@@ -1,3 +1,7 @@
 theme: jekyll-theme-slate
 title: DomusCONTROL App
 description: An easy way to control your home via MQTT
+author :
+  name : Alessandro Tornesello
+  email : alessadnro.tornesello99@gmail.com
+  github : iregon
