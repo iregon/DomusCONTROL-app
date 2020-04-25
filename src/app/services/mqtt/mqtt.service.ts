@@ -1,29 +1,26 @@
 import * as mqtt from 'mqtt';
 import { IClientOptions } from 'mqtt';
-import { DataService } from '../data/data.service';
+import { Output, EventEmitter, Injectable } from '@angular/core';
 
+@Injectable()
 export class MqttService {
 
     private client: mqtt.Client;
-    private onSuccess: () => any;
-    private onMessageArrived: (topic: string, message: string, dataService: DataService) => any;
-    
-    constructor(private dataService: DataService) {}
+
+    @Output() onConnect: EventEmitter<any> = new EventEmitter();
+    @Output() onMessageArrived: EventEmitter<string> = new EventEmitter();
+    @Output() onError: EventEmitter<any> = new EventEmitter();
+
+    constructor() {}
 
     connect(options: IClientOptions) {
         this.client = mqtt.connect(options);
-        this.client.on('connect', () => this.onSuccess());
-        // this.client.on('connect', () => console.log("Connected"));
-        this.client.on('message', (topic, message) => this.onMessageArrived(topic, message.toString(), this.dataService));
-        this.client.on('error', error => console.log(error.message));
-    }
-
-    setOnSuccess(onSuccess: () => any) {
-        this.onSuccess = onSuccess;
-    }
-
-    setOnMessageArrived(onMessageArrived: (topic: string, message: string, dataService: DataService) => any): void {
-        this.onMessageArrived = onMessageArrived;
+        this.client.on('connect', () => this.onConnect.emit());
+        this.client.on('message', (topic, message) => {
+            const value = topic + "#BR#" + message.toString();
+            this.onMessageArrived.emit(value)
+        });
+        this.client.on('error', error => this.onError.emit(error));
     }
 
     subscribe(topic: string): void {

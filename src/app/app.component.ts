@@ -5,11 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { ConfigService } from './services/config/config.service';
+import { DataService } from './services/data/data.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: ['app.component.scss'],
+  providers: [DataService]
 })
 export class AppComponent {
   
