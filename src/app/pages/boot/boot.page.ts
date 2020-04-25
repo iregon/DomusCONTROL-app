@@ -5,6 +5,7 @@ import { IClientOptions } from 'mqtt';
 import { MqttService } from 'src/app/services/mqtt/mqtt.service';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data/data.service';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-boot',
@@ -16,14 +17,15 @@ export class BootPage {
   networkConnectionState = 0;
   mqttBrokerConnectionState = 0;
 
-  private config;
+  private config: any;
   private mqttClient: MqttService;
 
   constructor(
     // private connectionService: ConnectionService, 
     private router: Router, 
     private configService: ConfigService,
-    private dataService: DataService) {
+    private dataService: DataService
+    ) {
     this.checkConnection();
   }
 
@@ -40,11 +42,11 @@ export class BootPage {
 
     // Check MQTT broker connection if network connection is present
     if(this.networkConnectionState == 1) {
+      const mqttClientId = "domuscontrol-app-" + uuid.v4();
       const options: IClientOptions = {
         hostname: this.config.project.mqttConnectionOptions.mqttBrokerAddress,
         port: Number(this.config.project.mqttConnectionOptions.mqttBrokerWebsocketPort),
-        //clientId: uuid.v4(),
-        clientId: 'sadsbdadsabdjh',
+        clientId: mqttClientId,
         username: this.config.project.mqttConnectionOptions.mqttUsername,
         password: this.config.project.mqttConnectionOptions.mqttPassword,
         protocol: 'wss'
@@ -54,14 +56,22 @@ export class BootPage {
 
       console.log('Connecting to broker...');
 
-      this.mqttClient = new MqttService(this.dataService);
-      this.mqttClient.setOnSuccess(() => {
+      this.mqttClient = new MqttService();
+
+      this.mqttClient.onConnect.subscribe(() => {
         console.log("onSuccess");
         this.mqttBrokerConnectionState = 1;
         this.subscribeToStateTopics();
         this.router.navigate(['dashboard']);
       });
-      this.mqttClient.setOnMessageArrived(this.onMessageArrived);
+
+      this.mqttClient.onMessageArrived.subscribe((value) => {
+        console.log("Msg arrived: " + value);
+        
+        const topic = value.split("#BR#")[0];
+        const msg = value.split("#BR#")[1];        
+        this.dataService.update(topic, msg);
+      });
       this.mqttClient.connect(options);
 
       console.log('Connected to broker.');
@@ -81,10 +91,5 @@ export class BootPage {
         })
       )
     );
-  }
-
-  private onMessageArrived(topic: string, message: string, dataService: DataService): void {
-    console.log(this.dataService);
-    dataService.update(topic, message);
   }
 }

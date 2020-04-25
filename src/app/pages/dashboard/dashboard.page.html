@@ -14,7 +14,7 @@
       <ion-row>
         <ion-col size-xs="6" size-md="3" *ngFor="let room of floor.rooms">
           <div class="grid-tile" (click)="goToRoomPage(floor.label, room.label)">
-            <img src="assets/images/room-tile-bg/{{room.type}}.jpg" alt="{{room.label}}'s image'">
+            <img src="assets/images/room-bg/{{room.type}}.jpg" alt="{{room.label}}'s image'">
             <p>{{room.label}}</p>
           </div>
         </ion-col>
