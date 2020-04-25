@@ -18,13 +18,13 @@ export class BootPage {
   mqttBrokerConnectionState = 0;
 
   private config: any;
-  private mqttClient: MqttService;
 
   constructor(
     // private connectionService: ConnectionService, 
     private router: Router, 
     private configService: ConfigService,
-    private dataService: DataService
+    private dataService: DataService,
+    private mqttClient: MqttService,
     ) {
     this.checkConnection();
   }
@@ -56,8 +56,6 @@ export class BootPage {
 
       console.log('Connecting to broker...');
 
-      this.mqttClient = new MqttService();
-
       this.mqttClient.onConnect.subscribe(() => {
         console.log("onSuccess");
         this.mqttBrokerConnectionState = 1;
@@ -72,6 +70,7 @@ export class BootPage {
         const msg = value.split("#BR#")[1];        
         this.dataService.update(topic, msg);
       });
+
       this.mqttClient.connect(options);
 
       console.log('Connected to broker.');

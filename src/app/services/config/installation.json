@@ -34,6 +34,23 @@
                 ]
               }
             ]
+          },
+          {
+            "label": "Bagno",
+            "type": "bath",
+            "devices": [
+              {
+                "label": "Luce",
+                "groupAddresses": [
+                  {
+                    "label": "Luce",
+                    "address": "0/0/1",
+                    "addressStatus": "0/0/5",
+                    "dpt": "1.001"
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
