@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { ConfigService } from './services/config/config.service';
 import { DataService } from './services/data/data.service';
+import { MqttService } from './services/mqtt/mqtt.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { DataService } from './services/data/data.service';
     SplashScreen,
     ConfigService,
     DataService,
+    MqttService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

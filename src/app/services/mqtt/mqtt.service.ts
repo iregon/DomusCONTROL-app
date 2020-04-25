@@ -13,7 +13,7 @@ export class MqttService {
 
     constructor() {}
 
-    connect(options: IClientOptions) {
+    public connect(options: IClientOptions) {
         this.client = mqtt.connect(options);
         this.client.on('connect', () => this.onConnect.emit());
         this.client.on('message', (topic, message) => {
@@ -23,11 +23,17 @@ export class MqttService {
         this.client.on('error', error => this.onError.emit(error));
     }
 
-    subscribe(topic: string): void {
+    public subscribe(topic: string): void {
         this.client.subscribe(topic);
     }
 
-    isConnected() {
+    public isConnected() {
         return this.client !== undefined;
+    }
+
+    public publish(topic: string, message: string) {
+        console.log("Publish msg:\ntopic: " + topic + "\n message: " + message);
+        
+        this.client.publish(topic, message);
     }
 }
