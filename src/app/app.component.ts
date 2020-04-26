@@ -13,8 +13,8 @@ import { DataService } from './services/data/data.service';
   styleUrls: ['app.component.scss'],
   providers: [DataService]
 })
-export class AppComponent {
-  
+export class AppComponent implements OnInit{
+    
   public appPages = [
     {
       title: 'Dashboard',
@@ -29,6 +29,13 @@ export class AppComponent {
     private statusBar: StatusBar,
     private config: ConfigService
   ) {
+    
+  }
+
+  ngOnInit(): void {
+    // set status bar to primary color
+    this.statusBar.backgroundColorByHexString('#3880ff');
+
     this.initializeApp();
   }
 
