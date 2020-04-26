@@ -12,16 +12,37 @@ export class MqttToggleComponent implements OnInit {
 
   public model: boolean = false;
 
-  private _topic: string = '';
+  private _statusTopic: string = '';
+  
+  @Input()
+  set statusTopic(statusTopic: string) {
+    this._statusTopic = statusTopic
+  }
+
+  private _commandTopic: string = '';
+  
+  @Input()
+  set commandTopic(commandTopic: string) {
+    this._commandTopic = commandTopic
+  }
+
+  private _highValue = '';
+
+  @Input()
+  set highValue(highValue: string) {
+    this._highValue = highValue
+  }
+
+  private _lowValue = '';
+
+  @Input()
+  set lowValue(lowValue: string) {
+    this._lowValue = lowValue
+  }
 
   // True if the last model change is occurred due to cause
   // a MQTT message 
   private lastIsMqtt: boolean = false;
-  
-  @Input()
-  set topic(topic: string) {
-    this._topic = topic
-  }
 
   constructor(
     private dataService: DataService,
@@ -31,11 +52,13 @@ export class MqttToggleComponent implements OnInit {
   ngOnInit() {    
     this.dataService.messages.subscribe(
         msg => {
-          if(msg[this._topic] == "1") this.model = true;
+          this.lastIsMqtt = true;
+          if(msg[this._statusTopic] == "1") this.model = true;
           else this.model = false
         },
         err => console.log("ERR: " + err),
         () => console.log("COMPLETE"));
+    this.lastIsMqtt = false;
   }
 
   public onChange() {
@@ -43,8 +66,7 @@ export class MqttToggleComponent implements OnInit {
       this.lastIsMqtt = !this.lastIsMqtt;
     }
     else {
-      //this.dataService.update(this._topic, this.model==true ? "1": "0");
-      this.mqttService.publish(this._topic, this.model==true ? "1": "0")
+      this.mqttService.publish(this._commandTopic, this.model==true ? this._highValue : this._lowValue)
     }
   }
 }

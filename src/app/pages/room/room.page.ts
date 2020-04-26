@@ -45,7 +45,17 @@ export class RoomPage implements OnInit {
 
     }
 
-    public getTopic(floor: string, room: string, device): string {
-        return floor.replace(' ', '_') + "/" + room.replace(' ', '_') + '/' + device.label + '/' + device.groupAddresses[0].addressStatus;
+    public getKnxStatusTopic(floor: string, room: string, device): string {
+        return floor.replace(' ', '_') + "/" + 
+            room.replace(' ', '_') + '/' + 
+            device.label.replace(' ', '_') + '/' + 
+            device.knx.groupAddresses[0].addressStatus;
+    }
+
+    public getKnxCommandTopic(floor: string, room: string, device): string {
+        return floor.replace(' ', '_') + "/" + 
+            room.replace(' ', '_') + '/' + 
+            device.label.replace(' ', '_') + '/' + 
+            device.knx.groupAddresses[0].address;
     }
 }

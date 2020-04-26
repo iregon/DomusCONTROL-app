@@ -32,8 +32,8 @@ export class MqttService {
     }
 
     public publish(topic: string, message: string) {
-        console.log("Publish msg:\ntopic: " + topic + "\n message: " + message);
+        console.log("Publish msg\ntopic: " + topic + "\n message: " + message);
         
-        this.client.publish(topic, message);
+        this.client.publish(topic, message.toString());
     }
 }
