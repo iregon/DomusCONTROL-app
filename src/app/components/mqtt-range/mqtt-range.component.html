@@ -1,0 +1,9 @@
+<ion-range 
+  min="{{minValue}}" 
+  max="{{maxValue}}" 
+  step="1" 
+  (ionChange)="onChange()" 
+  [(ngModel)]="model">
+  <ion-icon size="small" slot="start" name="remove"></ion-icon>
+  <ion-icon slot="end" name="add"></ion-icon>
+</ion-range>

@@ -81,14 +81,21 @@ export class BootPage {
     this.config.project.floors.forEach(floor =>
       floor.rooms.forEach(room =>
         room.devices.forEach(device => {
-          const topic = floor.label.replace(' ', '_') + '/' +
-            room.label.replace(' ', '_') + '/' +
-            device.label.replace(' ', '_') + '/' +
-            device.groupAddresses[0].addressStatus;
+          const topic = this.getDeviceTopic(floor.label, room.label, device)
           console.log(topic);
           this.mqttClient.subscribe(topic);
         })
       )
     );
+  }
+
+  private getDeviceTopic(floor: string, room: string, device: any): string {
+    if(device.knx != undefined)
+      return floor.replace(' ', '_') + '/' +
+        room.replace(' ', '_') + '/' +
+        device.label.replace(' ', '_') + '/' +
+        device.knx.groupAddresses[0].addressStatus;
+    else
+      return device.statusTopic;
   }
 }
