@@ -23,33 +23,29 @@
             "type": "kitchen",
             "devices": [
               {
-                "label": "Luce",
-                "groupAddresses": [
-                  {
-                    "label": "Luce",
-                    "address": "0/0/1",
-                    "addressStatus": "0/0/3",
-                    "dpt": "1.001"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "label": "Bagno",
-            "type": "bath",
-            "devices": [
+                "label": "Luce KNX",
+                "knx": {
+                  "groupAddresses": [
+                    {
+                      "label": "Luce",
+                      "address": "0/0/1",
+                      "addressStatus": "0/0/3",
+                      "dpt": "1.001"
+                    }
+                  ]
+                }
+              },
               {
-                "label": "Luce",
-                "groupAddresses": [
-                  {
-                    "label": "Luce",
-                    "address": "0/0/1",
-                    "addressStatus": "0/0/5",
-                    "dpt": "1.001"
-                  }
-                ]
+                "label": "Luce MQTT Generic",
+                "type": "1",
+                "statusTopic": "Piano_terra/Cucina/Luce2/status",
+                "commandTopic": "Piano_terra/Cucina/Luce2/cmd",
+                "context": {
+                  "highValue": "1",
+                  "lowValue": "0"
+                }
               }
+              
             ]
           }
         ]
