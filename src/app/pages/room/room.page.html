@@ -13,18 +13,19 @@
     <ion-item *ngFor="let device of getRoomConfig().devices">
       <ion-label>{{device.label}}</ion-label>
 
-      <div *ngIf="device.knx != undefined; else elseBlock" [ngSwitch]="device.knx.groupAddresses[0].dpt"> <!-- KNX component section -->
-        
-        <div *ngSwitchCase="1.001">
+      <!-- KNX component section -->
+      <div *ngIf="device.knx != undefined; else elseBlock">
+        <div *ngIf="getDptFormat(device.knx.groupAddresses[0].dpt) == 1">
           <mqtt-toggle
           [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
           [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
           [highValue]="1"
           [lowValue]="0"></mqtt-toggle>
         </div>
-        
       </div>
-      <ng-template #elseBlock> <!-- Generic component section -->
+
+      <!-- Generic component section -->
+      <ng-template #elseBlock> 
         <div [ngSwitch]="device.type">
           <div *ngSwitchCase="1">
             <mqtt-toggle
@@ -33,7 +34,6 @@
               [highValue]="device.context.highValue"
               [lowValue]="device.context.lowValue"></mqtt-toggle>
           </div>
-          
         </div>
       </ng-template>
       
