@@ -18,7 +18,16 @@ const routes: Routes = [
   {
     path: 'boot',
     loadChildren: () => import('./pages/boot/boot.module').then( m => m.BootPageModule)
+  },
+  {
+    path: 'options',
+    loadChildren: () => import('./pages/options/options.module').then( m => m.OptionsPageModule)
+  },
+  {
+    path: 'options',
+    loadChildren: () => import('./pages/options/options.module').then( m => m.OptionsPageModule)
   }
+
 ];
 
 @NgModule({

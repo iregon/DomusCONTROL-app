@@ -20,6 +20,11 @@ export class AppComponent implements OnInit{
       title: 'Dashboard',
       url: 'dashboard',
       icon: 'home'
+    },
+    {
+      title: 'Settings',
+      url: 'options',
+      icon: 'settings'
     }
   ];
 
