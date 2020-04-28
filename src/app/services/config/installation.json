@@ -57,6 +57,29 @@
                     }
                   ]
                 }
+              },
+              {
+                "label": "Temperatura KNX",
+                "knx": {
+                  "groupAddresses": [
+                    {
+                      "label": "Temperatura",
+                      "address": "0/0/11",
+                      "addressStatus": "0/0/31",
+                      "dpt": "9.001"
+                    }
+                  ]
+                }
+              },
+              {
+                "label": "Tapparella Generic",
+                "type": "5",
+                "statusTopic": "Piano_terra/Cucina/Tapparella2/status",
+                "commandTopic": "Piano_terra/Cucina/Tapparella2/cmd",
+                "context": {
+                  "maxValue": "255",
+                  "minValue": "0"
+                }
               }
             ]
           }

@@ -9,6 +9,7 @@ import { RoomPageRoutingModule } from './room-routing.module';
 import { RoomPage } from './room.page';
 import { MqttToggleComponent } from 'src/app/components/mqtt-toggle/mqtt-toggle.component' 
 import { MqttRangeComponent } from 'src/app/components/mqtt-range/mqtt-range.component';
+import { MqttLabelComponent } from 'src/app/components/mqtt-label/mqtt-label.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { MqttRangeComponent } from 'src/app/components/mqtt-range/mqtt-range.com
   declarations: [
     RoomPage, 
     MqttToggleComponent,
-    MqttRangeComponent
+    MqttRangeComponent,
+    MqttLabelComponent
   ]
 })
 export class RoomPageModule {}
