@@ -75,6 +75,7 @@ export class MqttRangeComponent implements OnInit {
         },
         err => console.log("ERR: " + err),
         () => console.log("COMPLETE"));
+    this.lastIsMqtt = false;
   }
 
   public onChange() {
