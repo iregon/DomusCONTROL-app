@@ -44,8 +44,20 @@
                   "highValue": "1",
                   "lowValue": "0"
                 }
+              },
+              {
+                "label": "Tapparella KNX",
+                "knx": {
+                  "groupAddresses": [
+                    {
+                      "label": "Tapparella",
+                      "address": "0/0/10",
+                      "addressStatus": "0/0/30",
+                      "dpt": "5.001"
+                    }
+                  ]
+                }
               }
-              
             ]
           }
         ]

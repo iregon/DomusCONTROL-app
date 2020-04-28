@@ -11,31 +11,35 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let device of getRoomConfig().devices">
-      <ion-label>{{device.label}}</ion-label>
+      <ion-label *ngIf="getDptFormat(device) == 1 || device.type == 1">{{device.label}}</ion-label>
 
       <!-- KNX component section -->
-      <div *ngIf="device.knx != undefined; else elseBlock">
-        <div *ngIf="getDptFormat(device.knx.groupAddresses[0].dpt) == 1">
-          <mqtt-toggle
-          [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
-          [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
-          [highValue]="1"
-          [lowValue]="0"></mqtt-toggle>
-        </div>
-      </div>
+
+      <!-- 1.x Switch -->
+      <mqtt-toggle *ngIf="device.knx != undefined && getDptFormat(device) == 1"
+        [label]="device.label"
+        [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
+        [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
+        [highValue]="1"
+        [lowValue]="0"></mqtt-toggle>
+
+      <!-- 5.x Uint 8bit-->
+      <mqtt-range *ngIf="device.knx != undefined && getDptFormat(device) == 5"
+        [label]="device.label"
+        [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
+        [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
+        [maxValue]="255"
+        [minValue]="0"></mqtt-range>
 
       <!-- Generic component section -->
-      <ng-template #elseBlock> 
-        <div [ngSwitch]="device.type">
-          <div *ngSwitchCase="1">
-            <mqtt-toggle
-              [statusTopic]="device.statusTopic"
-              [commandTopic]="device.commandTopic"
-              [highValue]="device.context.highValue"
-              [lowValue]="device.context.lowValue"></mqtt-toggle>
-          </div>
-        </div>
-      </ng-template>
+      
+      <!-- 1 Switch -->
+      <mqtt-toggle *ngIf="device.knx == undefined && device.type == 1"
+        [label]="device.label"
+        [statusTopic]="device.statusTopic"
+        [commandTopic]="device.commandTopic"
+        [highValue]="device.context.highValue"
+        [lowValue]="device.context.lowValue"></mqtt-toggle>
       
     </ion-item>
   </ion-list>

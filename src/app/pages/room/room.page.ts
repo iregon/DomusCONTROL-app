@@ -60,7 +60,12 @@ export class RoomPage implements OnInit {
     }
 
     // https://support.knx.org/hc/it/articles/115001133744-Tipo-di-punto-dati
-    public getDptFormat(dpt: string) {
-        return dpt.split(".")[0];
+    public getDptFormat(device: any) {
+        if(device.knx != undefined) {
+            return device.knx.groupAddresses[0].dpt.split(".")[0];
+        }
+        else {
+            return undefined;
+        }
     }
 }
