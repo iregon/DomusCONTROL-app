@@ -17,7 +17,6 @@
 
       <!-- 1.x Switch -->
       <mqtt-toggle *ngIf="device.knx != undefined && getDptFormat(device) == 1"
-        [label]="device.label"
         [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
         [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
         [highValue]="1"
@@ -35,12 +34,18 @@
       
       <!-- 1 Switch -->
       <mqtt-toggle *ngIf="device.knx == undefined && device.type == 1"
-        [label]="device.label"
         [statusTopic]="device.statusTopic"
         [commandTopic]="device.commandTopic"
         [highValue]="device.context.highValue"
         [lowValue]="device.context.lowValue"></mqtt-toggle>
       
+      <!-- 5 Slider -->
+      <mqtt-range *ngIf="device.knx == undefined && device.type == 5"
+        [label]="device.label"
+        [statusTopic]="device.label"
+        [commandTopic]="device.commandTopic"
+        [maxValue]="device.context.maxValue"
+        [minValue]="device.context.minValue"></mqtt-range>
     </ion-item>
   </ion-list>
 </ion-content>
