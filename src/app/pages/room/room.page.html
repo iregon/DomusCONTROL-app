@@ -11,7 +11,8 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let device of getRoomConfig().devices">
-      <ion-label *ngIf="getDptFormat(device) == 1 || device.type == 1">{{device.label}}</ion-label>
+      <ion-label *ngIf="getDptFormat(device) == 1 || device.type == 1 ||
+      getDptFormat(device) == 9 || device.type == 9">{{device.label}}</ion-label>
 
       <!-- KNX component section -->
 
@@ -29,6 +30,12 @@
         [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
         [maxValue]="255"
         [minValue]="0"></mqtt-range>
+      
+      <!-- 9.001 Label Temperature -->
+
+      <mqtt-label *ngIf="device.knx != undefined && device.knx.groupAddresses[0].dpt == '9.001'"
+        [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
+        [suffix]="'&deg;C'"></mqtt-label>
 
       <!-- Generic component section -->
       
@@ -42,10 +49,17 @@
       <!-- 5 Slider -->
       <mqtt-range *ngIf="device.knx == undefined && device.type == 5"
         [label]="device.label"
-        [statusTopic]="device.label"
+        [statusTopic]="device.statusTopic"
         [commandTopic]="device.commandTopic"
         [maxValue]="device.context.maxValue"
         [minValue]="device.context.minValue"></mqtt-range>
+      
+      <!-- 9 Label -->
+      <mqtt-label *ngIf="device.knx == undefined && device.type == 9"
+        [statusTopic]="device.statusTopic"
+        [prefix]="device.context.prefix"
+        [suffix]="device.context.suffix"></mqtt-label>
+
     </ion-item>
   </ion-list>
 </ion-content>
