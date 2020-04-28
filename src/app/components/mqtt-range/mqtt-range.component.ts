@@ -11,6 +11,17 @@ export class MqttRangeComponent implements OnInit {
 
   public model: string = '0';
 
+  private _label: string = '';
+  
+  @Input()
+  set label(label: string) {
+    this._label = label;
+  }
+
+  get label() {
+    return this._label;
+  }
+  
   private _statusTopic: string = '';
   
   @Input()

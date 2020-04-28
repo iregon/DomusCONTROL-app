@@ -58,4 +58,14 @@ export class RoomPage implements OnInit {
             device.label.replace(' ', '_') + '/' + 
             device.knx.groupAddresses[0].address;
     }
+
+    // https://support.knx.org/hc/it/articles/115001133744-Tipo-di-punto-dati
+    public getDptFormat(device: any) {
+        if(device.knx != undefined) {
+            return device.knx.groupAddresses[0].dpt.split(".")[0];
+        }
+        else {
+            return undefined;
+        }
+    }
 }

@@ -12,32 +12,43 @@ export class MqttToggleComponent implements OnInit {
 
   public model: boolean = false;
 
+  private _label: string = '';
+  
+  @Input()
+  set label(label: string) {
+    this._label = label;
+  }
+
+  get label() {
+    return this._label;
+  }
+
   private _statusTopic: string = '';
   
   @Input()
   set statusTopic(statusTopic: string) {
-    this._statusTopic = statusTopic
+    this._statusTopic = statusTopic;
   }
 
   private _commandTopic: string = '';
   
   @Input()
   set commandTopic(commandTopic: string) {
-    this._commandTopic = commandTopic
+    this._commandTopic = commandTopic;
   }
 
   private _highValue = '';
 
   @Input()
   set highValue(highValue: string) {
-    this._highValue = highValue
+    this._highValue = highValue;
   }
 
   private _lowValue = '';
 
   @Input()
   set lowValue(lowValue: string) {
-    this._lowValue = lowValue
+    this._lowValue = lowValue;
   }
 
   // True if the last model change is occurred due to cause
