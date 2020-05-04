@@ -6,6 +6,7 @@ import { MqttService } from 'src/app/services/mqtt/mqtt.service';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data/data.service';
 import * as uuid from 'uuid';
+import { Message } from 'src/app/services/mqtt/Message';
 
 @Component({
   selector: 'app-boot',
@@ -63,11 +64,11 @@ export class BootPage {
         this.router.navigate(['dashboard']);
       });
 
-      this.mqttClient.onMessageArrived.subscribe((value) => {
-        console.log("Msg arrived: " + value);
+      this.mqttClient.onMessageArrived.subscribe((value: Message) => {
+        console.log("Msg arrived: " + value.toString());
         
-        const topic = value.split("#BR#")[0];
-        const msg = value.split("#BR#")[1];        
+        const topic = value.topic;
+        const msg = value.message;        
         this.dataService.update(topic, msg);
       });
 

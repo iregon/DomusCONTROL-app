@@ -50,9 +50,7 @@ export class MqttLabelComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private mqttService: MqttService) { 
-      console.log(this._prefix+ " "+ this._model+ " " + this._suffix);
-    }
+    private mqttService: MqttService) {}
 
   ngOnInit() {
     this.dataService.messages.subscribe(

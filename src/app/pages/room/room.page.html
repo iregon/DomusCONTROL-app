@@ -20,16 +20,16 @@
       <mqtt-toggle *ngIf="device.knx != undefined && getDptFormat(device) == 1"
         [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
         [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
-        [highValue]="1"
-        [lowValue]="0"></mqtt-toggle>
+        [highValue]="'1'"
+        [lowValue]="'0'"></mqtt-toggle>
 
       <!-- 5.x Uint 8bit-->
       <mqtt-range *ngIf="device.knx != undefined && getDptFormat(device) == 5"
         [label]="device.label"
         [statusTopic]="getKnxStatusTopic(getFloorConfig().label, getRoomConfig().label, device)"
         [commandTopic]="getKnxCommandTopic(getFloorConfig().label, getRoomConfig().label, device)"
-        [maxValue]="255"
-        [minValue]="0"></mqtt-range>
+        [maxValue]="'255'"
+        [minValue]="'0'"></mqtt-range>
       
       <!-- 9.001 Label Temperature -->
 
