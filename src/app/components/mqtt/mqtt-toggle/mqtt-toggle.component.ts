@@ -3,13 +3,14 @@ import { DataService } from 'src/app/services/data/data.service';
 import { MqttService } from 'src/app/services/mqtt/mqtt.service';
 
 @Component({
-  selector: 'mqtt-range',
-  templateUrl: './mqtt-range.component.html',
-  styleUrls: ['./mqtt-range.component.scss'],
+  selector: 'mqtt-toggle',
+  templateUrl: './mqtt-toggle.component.html',
+  styleUrls: ['./mqtt-toggle.component.scss'],
+  //providers: [DataService]
 })
-export class MqttRangeComponent implements OnInit {
+export class MqttToggleComponent implements OnInit {
 
-  public model: string = '0';
+  public model: boolean = false;
 
   private _label: string = '';
   
@@ -21,7 +22,7 @@ export class MqttRangeComponent implements OnInit {
   get label() {
     return this._label;
   }
-  
+
   private _statusTopic: string = '';
   
   @Input()
@@ -36,26 +37,18 @@ export class MqttRangeComponent implements OnInit {
     this._commandTopic = commandTopic;
   }
 
-  private _maxValue = '';
+  private _highValue = '';
 
   @Input()
-  set maxValue(maxValue: string) {
-    this._maxValue = maxValue;
+  set highValue(highValue: string) {
+    this._highValue = highValue;
   }
 
-  get maxValue() {
-    return this._maxValue;
-  }
-
-  private _minValue = '';
+  private _lowValue = '';
 
   @Input()
-  set minValue(minValue: string) {
-    this._minValue = minValue;
-  }
-
-  get minValue() {
-    return this._minValue;
+  set lowValue(lowValue: string) {
+    this._lowValue = lowValue;
   }
 
   // True if the last model change is occurred due to cause
@@ -70,8 +63,12 @@ export class MqttRangeComponent implements OnInit {
   ngOnInit() {    
     this.dataService.messages.subscribe(
         msg => {
-          this.lastIsMqtt = true;
-          this.model = msg[this._statusTopic];
+          if(msg[this._statusTopic] != this.model) {
+            this.lastIsMqtt = true;
+            
+            if(msg[this._statusTopic] == this._highValue) this.model = true;
+            else this.model = false
+          }
         },
         err => console.log("ERR: " + err),
         () => console.log("COMPLETE"));
@@ -79,11 +76,13 @@ export class MqttRangeComponent implements OnInit {
   }
 
   public onChange() {
-    if(this.lastIsMqtt) {
-      this.lastIsMqtt = !this.lastIsMqtt;
+    if (this.lastIsMqtt) {
+      this.lastIsMqtt = false;
     }
     else {
-      this.mqttService.publish(this._commandTopic, this.model);
+      this.mqttService.publish(this._commandTopic, this.model ? this._highValue : this._lowValue)
+      this.mqttService.publish(this._statusTopic, this.model ? this._highValue : this._lowValue, true);
     }
+    
   }
 }

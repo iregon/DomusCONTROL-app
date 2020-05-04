@@ -3,14 +3,13 @@ import { DataService } from 'src/app/services/data/data.service';
 import { MqttService } from 'src/app/services/mqtt/mqtt.service';
 
 @Component({
-  selector: 'mqtt-toggle',
-  templateUrl: './mqtt-toggle.component.html',
-  styleUrls: ['./mqtt-toggle.component.scss'],
-  //providers: [DataService]
+  selector: 'mqtt-range',
+  templateUrl: './mqtt-range.component.html',
+  styleUrls: ['./mqtt-range.component.scss'],
 })
-export class MqttToggleComponent implements OnInit {
+export class MqttRangeComponent implements OnInit {
 
-  public model: boolean = false;
+  public model: string = '0';
 
   private _label: string = '';
   
@@ -22,7 +21,7 @@ export class MqttToggleComponent implements OnInit {
   get label() {
     return this._label;
   }
-
+  
   private _statusTopic: string = '';
   
   @Input()
@@ -37,18 +36,26 @@ export class MqttToggleComponent implements OnInit {
     this._commandTopic = commandTopic;
   }
 
-  private _highValue = '';
+  private _maxValue = '';
 
   @Input()
-  set highValue(highValue: string) {
-    this._highValue = highValue;
+  set maxValue(maxValue: string) {
+    this._maxValue = maxValue;
   }
 
-  private _lowValue = '';
+  get maxValue() {
+    return this._maxValue;
+  }
+
+  private _minValue = '';
 
   @Input()
-  set lowValue(lowValue: string) {
-    this._lowValue = lowValue;
+  set minValue(minValue: string) {
+    this._minValue = minValue;
+  }
+
+  get minValue() {
+    return this._minValue;
   }
 
   // True if the last model change is occurred due to cause
@@ -63,21 +70,25 @@ export class MqttToggleComponent implements OnInit {
   ngOnInit() {    
     this.dataService.messages.subscribe(
         msg => {
-          this.lastIsMqtt = true;
-          if(msg[this._statusTopic] == "1") this.model = true;
-          else this.model = false
+          if(msg[this._statusTopic] != this.model) {
+            
+            this.lastIsMqtt = true;
+            this.model = msg[this._statusTopic];
+          }
         },
         err => console.log("ERR: " + err),
         () => console.log("COMPLETE"));
+
     this.lastIsMqtt = false;
   }
 
   public onChange() {
-    if(this.lastIsMqtt) {
-      this.lastIsMqtt = !this.lastIsMqtt;
+    if (this.lastIsMqtt) {
+      this.lastIsMqtt = false;
     }
     else {
-      this.mqttService.publish(this._commandTopic, this.model==true ? this._highValue : this._lowValue)
+      this.mqttService.publish(this._commandTopic, this.model.toString());
+      this.mqttService.publish(this._statusTopic, this.model.toString(), true);
     }
   }
 }

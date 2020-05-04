@@ -16,7 +16,7 @@ export class OptionsPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(localStorage.getItem("darkMode"));
+    // console.log(localStorage.getItem("darkMode"));
     
     if (localStorage.getItem("darkMode") == "1") {
       this.darkModeToggleModel = true; 

@@ -1,6 +1,7 @@
 import * as mqtt from 'mqtt';
 import { IClientOptions } from 'mqtt';
 import { Output, EventEmitter, Injectable } from '@angular/core';
+import { Message } from './Message';
 
 @Injectable()
 export class MqttService {
@@ -8,7 +9,7 @@ export class MqttService {
     private client: mqtt.Client;
 
     @Output() onConnect: EventEmitter<any> = new EventEmitter();
-    @Output() onMessageArrived: EventEmitter<string> = new EventEmitter();
+    @Output() onMessageArrived: EventEmitter<Message> = new EventEmitter();
     @Output() onError: EventEmitter<any> = new EventEmitter();
 
     constructor() {}
@@ -17,8 +18,7 @@ export class MqttService {
         this.client = mqtt.connect(options);
         this.client.on('connect', () => this.onConnect.emit());
         this.client.on('message', (topic, message) => {
-            const value = topic + "#BR#" + message.toString();
-            this.onMessageArrived.emit(value)
+            this.onMessageArrived.emit(new Message(topic.toString(), message.toString()))
         });
         this.client.on('error', error => this.onError.emit(error));
     }
@@ -31,9 +31,9 @@ export class MqttService {
         return this.client !== undefined;
     }
 
-    public publish(topic: string, message: string) {
-        console.log("Publish msg\ntopic: " + topic + "\n message: " + message);
+    public publish(topic: string, message: string, retain: boolean = false) {
+        console.log("Publish msg\ntopic: " + topic + "\nmessage: " + message);
         
-        this.client.publish(topic, message.toString());
+        this.client.publish(topic.toString(), message.toString(), {qos: 1, retain: retain});
     }
 }
